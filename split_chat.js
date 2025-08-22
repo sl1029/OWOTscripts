@@ -64,7 +64,8 @@ function newChatTab(world2add) {
         sanitizedName: sworld,
         chatAdditions: [],
         chatUnread: 0,
-        tabOpen: false
+        tabOpen: false,
+        usersOnline: 0,
     };
 
     new_chatTab.addEventListener("click", () => {
@@ -89,10 +90,12 @@ function newChatTab(world2add) {
         tabObject.chatUnread = 0;
         insertNewChatElementsIntoChatfield(document.getElementById(`${sworld}_chatfield`), findBySName(sworld).chatAdditions);
         updateUnread(tabObject.world);
+        updateUserCount(findByName(world));
     });
 
     new_socket.onopen = function(){
 	    new_socket.send(`{"kind":"chathistory"}`);
+        new_socket.send(`{"kind":"user_count"}`);
     }
     
     new_socket.onmessage = function(msg) {
@@ -111,6 +114,8 @@ function newChatTab(world2add) {
             data.type = chatType(data.registered, data.nickname, data.realUsername);
             w_addChat(data.id, data.type, data.nickname, data.message, data.realUsername,
                       data.op, data.admin, data.staff, data.color, data.date || Date.now(), data.dataObj, world);
+        } else if (data.kind == "user_count") {
+            findByName(world).usersOnline = data.count;
         }
     };
 
@@ -162,6 +167,23 @@ function w_onhistory(data, page) {
         w_addChat(chat.id, type, chat.nickname, chat.message, chat.realUsername,
                   chat.op, chat.admin, chat.staff, chat.color, chat.date, chat, page);
     }
+}
+
+function updateUserCount(world = null) {
+	if (world) {var count = world.usersOnline} else {var count = w.userCount}
+	if(count == void 0) {
+		elm.usr_online.innerText = "";
+		return;
+	}
+	var unit = "user";
+	var units = "users";
+	var current_unit;
+	if(count == 1) {
+		current_unit = unit;
+	} else {
+		current_unit = units;
+	}
+	elm.usr_online.innerText = count + " " + current_unit + " online";
 }
 
 // removing vanilla event listeners
@@ -223,6 +245,7 @@ elm.chat_page_tab.addEventListener("click", function() {
 
 	insertNewChatElements();
 	updateUnread();
+    updateUserCount();
 	if(!initPageTabOpen) {
 		initPageTabOpen = true;
 		elm.page_chatfield.scrollTop = elm.page_chatfield.scrollHeight;
@@ -246,6 +269,7 @@ elm.chat_global_tab.addEventListener("click", function() {
     
 	insertNewChatElements();
 	updateUnread();
+    updateUserCount();
 	if(!initGlobalTabOpen) {
 		initGlobalTabOpen = true;
 		elm.global_chatfield.scrollTop = elm.global_chatfield.scrollHeight;
