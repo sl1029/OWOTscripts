@@ -14,10 +14,18 @@ elm.chat_global_tab.after(worldInput);
 let addBtn = document.createElement("button");
 addBtn.textContent = "+";
 worldInput.after(addBtn);
+let removeBtn = document.createElement("button");
+removeBtn.textContent = "-";
+worldInput.after(removeBtn);
 
 // functions
 function nct(inputElm) {
     newChatTab(inputElm.value);
+    inputElm.value = "";
+}
+
+function rct(inputElm) {
+    removeChatTab(inputElm.value);
     inputElm.value = "";
 }
 
@@ -121,6 +129,14 @@ function newChatTab(world2add) {
 
     tabs.push(tabObject);
     chatId++;
+}
+
+function removeChatTab(name) {
+    let world = findByName(name);
+    document.getElementById(`${world.sanitizedName}_chatfield`).remove();
+    document.getElementById(`${world.sanitizedName}_unread`).remove();
+    document.getElementById(`chat_${world.sanitizedName}_tab`).remove();
+    tabs.splice(tabs.indexOf(world),1);
 }
 
 function validVarName(xname) {
@@ -352,3 +368,4 @@ function updateUnread(wpage) {
 
 // add button behaviour
 addBtn.onclick = () => nct(document.getElementById("world_input_field"));
+removeBtn.onclick = () => rct(document.getElementById("world_input_field"));
