@@ -136,7 +136,6 @@ function newChatTab(world2add) {
 
     tabs.push(tabObject);
     chatId++;
-    if (typeof onNewChatTab === "function") onNewChatTab(tabObject);
 }
 
 function removeChatTab(name) {
@@ -191,6 +190,7 @@ function w_onhistory(data, page) {
         w_addChat(chat.id, type, chat.nickname, chat.message, chat.realUsername,
                   chat.op, chat.admin, chat.staff, chat.color, chat.date, chat, page);
     }
+    if (typeof onNewChatTab === "function") onNewChatTab(tabObject);
 }
 
 function updateUserCount(world = null) {
