@@ -29,7 +29,7 @@ function rct(inputElm) {
     inputElm.value = "";
 }
 
-if (typeof onNewChatTab() !== "function") { 
+if (typeof onNewChatTab() === "undefined") { 
     function onNewChatTab() {
         // custom code runs here for easy cross-script implementation
         return;
