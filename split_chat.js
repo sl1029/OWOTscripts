@@ -29,6 +29,13 @@ function rct(inputElm) {
     inputElm.value = "";
 }
 
+if (typeof onNewChatTab !== "function") { 
+    function onNewChatTab() {
+        // custom code runs here for easy cross-script implementation
+        return;
+    }
+}
+
 function newChatTab(world2add) {
     let match = world2add.match(/[a-zA-Z._-]+/g);
     if (!match) {
@@ -129,6 +136,7 @@ function newChatTab(world2add) {
 
     tabs.push(tabObject);
     chatId++;
+    if (typeof onNewChatTab === "function") onNewChatTab(world2add);
 }
 
 function removeChatTab(name) {
