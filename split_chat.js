@@ -136,7 +136,7 @@ function newChatTab(world2add) {
 
     tabs.push(tabObject);
     chatId++;
-    if (typeof onNewChatTab === "function") onNewChatTab(world2add);
+    if (typeof onNewChatTab === "function") onNewChatTab(tabObject);
 }
 
 function removeChatTab(name) {
