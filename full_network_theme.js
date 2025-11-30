@@ -21,7 +21,6 @@
         w.changeFont("$px JetBrains Mono:500");
     };
     w.redraw();
-    asyncTheming();
     // font changes
     for (let i = 0; i < 3; i++) {
         w.changeFont("$px JetBrains Mono");
