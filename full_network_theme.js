@@ -15,22 +15,12 @@
     var defaults = defaultStyles();
     if (typeof myhub_mode == undefined) var myhub_mode = 1;
     // have to do it async otherwise it wouldn't work
-    function resolveAfter2Seconds() {
-    return new Promise((resolve) => {
-       setTimeout(() => {
-              resolve(1);
-          }, 1800);
-       });
-    }
-    async function asyncTheming() {
-    const result = await resolveAfter2Seconds();
     for (const [key, value] of Object.entries(changes)) {
         styles[key] = value;
         w.changeFont("$px JetBrains Mono");
         w.changeFont("$px JetBrains Mono:500");
     };
     w.redraw();
-    };
     asyncTheming();
     // font changes
     for (let i = 0; i < 3; i++) {
