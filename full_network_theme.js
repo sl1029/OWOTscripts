@@ -25,9 +25,7 @@
     async function asyncTheming() {
     const result = await resolveAfter2Seconds();
     for (const [key, value] of Object.entries(changes)) {
-        if (styles[key] == defaults[key] || myhub_mode) {
-            styles[key] = value;
-        };
+        styles[key] = value;
         w.changeFont("$px JetBrains Mono");
         w.changeFont("$px JetBrains Mono:500");
     };
