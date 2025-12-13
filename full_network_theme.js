@@ -151,17 +151,4 @@
     let st = document.createElement('style');
     st.innerHTML = "body {background-color: #041719; color: #bbefef;} button { background: linear-gradient(125deg,rgba(0, 180, 204, 1) 0%, rgba(0, 179, 125, 1) 100%); border-radius: 16px; border: 0; color: #ffffff;} .chat_tab_button { background: linear-gradient(125deg,rgba(0, 116, 145, 1) 0%, rgba(0, 79, 51, 1) 100%); border-radius: 16px; border: 0; } .chat_tab_selected { background: linear-gradient(125deg,rgba(0, 180, 204, 1) 0%, rgba(0, 179, 125, 1) 100%); border-radius: 16px; border: 0; }";
     head.appendChild(st);
-    function onNewChatTab(tabObject) { // never called in vanilla owot
-        console.log("onNewChatTab() is called by external script");
-        changes2 = [
-        [".unread", "color", "#cc00ff"],
-        [".chatfield", "backgroundColor", "#110022"],
-        [".chatfield", "borderRadius", "16px"],
-        [".chatfield", "color", "#f1c7fb"],
-        ];
-        for (let i of changes2) {
-        for (let e of document.querySelectorAll(i[0])){
-            e.style[i[1]] = i[2];
-        };
-        };
-    }})
+    })();
